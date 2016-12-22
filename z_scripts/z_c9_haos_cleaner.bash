@@ -5,45 +5,51 @@ IFS=$'\n\t';
 
 # Script Variables
 
-script_version="0.013";
-backup_directory_name="";
+script_version="0.015";
+script_log_file_name="C9_CLEANUP_LOG.md";
+#script_log_file_directory="Z_SCRIPT_BACKED_Z_UP";
+backup_directory_name="Z_SCRIPT_BACKED_Z_UP";
 github_cleanup_ssh_url_string="";
 directory_name_being_added="";
 directory_being_backed_up="";
 
 function init(){
     say_hello;
+    #code_block_func tree;
     prompt_for_continuation;
     set_script_vars;
-    create_backup_directory_from_clone;
-    copy_files_to_be_backed_up_into_backup_directory;
+    code_block_func create_backup_directory_from_clone;
+    code_block_func copy_files_to_be_backed_up_into_backup_directory;
     prompt_for_continuation;
     #add_commit_push_files_back_to_github;
+    say_goodbye;
 }
 
 function create_line_across_terminal()
 {
-    echo
-    printf '%*s\n' "${COLUMNS:-$(tput cols)}" '' | tr ' ' -
-    echo
+    printf "\n";
+    printf '%*s\n' "${COLUMNS:-$(tput cols)}" '' | tr ' ' -;
+    printf "\n";
 }
 
 function say_hello(){
     create_line_across_terminal;
-    printf "\nHaos C9 Scripted Cleanup!\n";
+    printf "Haos C9 Scripted Cleanup!\n";
     printf "\nVersion : $script_version\n";
+    printf "\nStart @ : $(date)\n";
+    
 }
 
 function prompt_for_continuation(){
     create_line_across_terminal;
-    read -p "Would you like to continue? " -n 1 -r
-    echo
+    read -p "Continue? : " -n 1 -r;
+    printf "\`\`\` \$ %s\`\`\`\n" $REPLY;
     if [[ $REPLY =~ ^[Yy]$ ]]
     then
-        printf "Continuing.\n"
+        printf "\n #### *USER CONTINUES!*.\n";
     else
-        printf "Exiting.\n"
-        exit;
+        printf "### Exiting Script.\n";
+        say_goodbye;
     fi    
     create_line_across_terminal;
 }
@@ -56,9 +62,22 @@ function set_script_vars(){
 }
 
 function create_backup_directory_from_clone(){
-    create_line_across_terminal;
     git clone $github_cleanup_ssh_url_string $backup_directory_name;
 }
+
+
+function code_block_func(){
+    create_line_across_terminal;
+    printf "**Script Calls :**\n\n \`\`\` $C9_FULLNAME:$PWD \$ %s\`\`\`\n" "$1";
+    create_line_across_terminal;
+    printf "\`\`\`bash\n";
+    $1;
+    printf "\`\`\`\n";
+    printf "\n(*%s finished.*)\n" "$1";
+    create_line_across_terminal;
+}
+
+
 
 function copy_files_to_be_backed_up_into_backup_directory(){
     create_line_across_terminal;
@@ -77,4 +96,20 @@ function add_commit_push_files_back_to_github(){
     cd $GOPATH;
 }
 
-init 2>&1 | tee -a outfile.txt;
+
+function say_goodbye(){
+    create_line_across_terminal;
+    printf "Haos C9 Scripted Cleanup!\n";
+    printf "\nVersion : $script_version\n";
+    printf "\nEnded @ : $(date)\n";
+    create_line_across_terminal;
+    exit;
+}
+
+
+init 2>&1 | tee -a $script_log_file_name;
+
+mv ./$script_log_file_name ./$backup_directory_name;
+
+# One more time to record log in remote repo.
+add_commit_push_files_back_to_github;
