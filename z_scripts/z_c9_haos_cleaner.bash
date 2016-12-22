@@ -5,6 +5,7 @@ IFS=$'\n\t';
 
 # Script Variables
 
+script_version="0.01";
 backup_directory_name="";
 github_cleanup_ssh_url_string="";
 directory_name_being_added="";
@@ -12,15 +13,28 @@ directory_being_backed_up="";
 
 function init(){
     say_hello;
+    prompt_for_continuation;
     set_script_vars;
     create_backup_directory_from_clone;
     copy_files_to_be_backed_up_into_backup_directory;
-    add_commit_push_files_back_to_github;
+    #add_commit_push_files_back_to_github;
 }
 
 function say_hello(){
     clear;
-    printf "\nHello World!\n";
+    printf "\nHaos C9 Scripted Cleanup!\n";
+    printf "\nVersion : $script_version\n";
+}
+
+function prompt_for_continuation(){
+    read -p "Would you like to continue? " -n 1 -r
+    echo
+    if [[ $REPLY =~ ^[Yy]$ ]]
+    then
+        printf "Continuing.\n"
+    else
+        exit;
+    fi    
 }
 
 function set_script_vars(){
