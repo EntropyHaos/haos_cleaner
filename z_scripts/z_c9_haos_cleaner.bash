@@ -5,7 +5,7 @@ IFS=$'\n\t';
 
 # Script Variables
 
-script_version="0.011";
+script_version="0.012";
 backup_directory_name="";
 github_cleanup_ssh_url_string="";
 directory_name_being_added="";
@@ -64,4 +64,4 @@ function add_commit_push_files_back_to_github(){
     cd $GOPATH;
 }
 
-init;
+init 2>&1 | tee -a outfile.txt;
