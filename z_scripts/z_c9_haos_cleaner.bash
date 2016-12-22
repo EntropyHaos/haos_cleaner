@@ -5,7 +5,7 @@ IFS=$'\n\t';
 
 # Script Variables
 
-script_version="0.01";
+script_version="0.011";
 backup_directory_name="";
 github_cleanup_ssh_url_string="";
 directory_name_being_added="";
@@ -17,6 +17,7 @@ function init(){
     set_script_vars;
     create_backup_directory_from_clone;
     copy_files_to_be_backed_up_into_backup_directory;
+    prompt_for_continuation;
     #add_commit_push_files_back_to_github;
 }
 
@@ -33,6 +34,7 @@ function prompt_for_continuation(){
     then
         printf "Continuing.\n"
     else
+        printf "Exiting.\n"
         exit;
     fi    
 }
