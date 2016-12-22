@@ -4,10 +4,8 @@ IFS=$'\n\t';
 # Sauce for above : http://redsymbol.net/articles/unofficial-bash-strict-mode/ 
 
 # Script Variables
-
-script_version="0.015";
+script_version="0.016";
 script_log_file_name="C9_CLEANUP_LOG.md";
-#script_log_file_directory="Z_SCRIPT_BACKED_Z_UP";
 backup_directory_name="Z_SCRIPT_BACKED_Z_UP";
 github_cleanup_ssh_url_string="";
 directory_name_being_added="";
@@ -21,12 +19,11 @@ function init(){
     code_block_func create_backup_directory_from_clone;
     code_block_func copy_files_to_be_backed_up_into_backup_directory;
     prompt_for_continuation;
-    #add_commit_push_files_back_to_github;
+    add_commit_push_files_back_to_github;
     say_goodbye;
 }
 
-function create_line_across_terminal()
-{
+function create_line_across_terminal(){
     printf "\n";
     printf '%*s\n' "${COLUMNS:-$(tput cols)}" '' | tr ' ' -;
     printf "\n";
@@ -65,7 +62,6 @@ function create_backup_directory_from_clone(){
     git clone $github_cleanup_ssh_url_string $backup_directory_name;
 }
 
-
 function code_block_func(){
     create_line_across_terminal;
     printf "**Script Calls :**\n\n \`\`\` $C9_FULLNAME:$PWD \$ %s\`\`\`\n" "$1";
@@ -76,8 +72,6 @@ function code_block_func(){
     printf "\n(*%s finished.*)\n" "$1";
     create_line_across_terminal;
 }
-
-
 
 function copy_files_to_be_backed_up_into_backup_directory(){
     create_line_across_terminal;
@@ -96,7 +90,6 @@ function add_commit_push_files_back_to_github(){
     cd $GOPATH;
 }
 
-
 function say_goodbye(){
     create_line_across_terminal;
     printf "Haos C9 Scripted Cleanup!\n";
@@ -105,7 +98,6 @@ function say_goodbye(){
     create_line_across_terminal;
     exit;
 }
-
 
 init 2>&1 | tee -a $script_log_file_name;
 
