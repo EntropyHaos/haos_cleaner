@@ -1,0 +1,92 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+  <meta charset="UTF-8">
+  <title>C9 Haos Cleanup!</title>
+
+  <link rel="stylesheet" href="../css/style.css">
+
+  <link rel="apple-touch-icon" sizes="57x57" href="../img/favi/apple-icon-57x57.png">
+  <link rel="apple-touch-icon" sizes="60x60" href="../img/favi/apple-icon-60x60.png">
+  <link rel="apple-touch-icon" sizes="72x72" href="../img/favi/apple-icon-72x72.png">
+  <link rel="apple-touch-icon" sizes="76x76" href="../img/favi/apple-icon-76x76.png">
+  <link rel="apple-touch-icon" sizes="114x114" href="../img/favi/apple-icon-114x114.png">
+  <link rel="apple-touch-icon" sizes="120x120" href="../img/favi/apple-icon-120x120.png">
+  <link rel="apple-touch-icon" sizes="144x144" href="../img/favi/apple-icon-144x144.png">
+  <link rel="apple-touch-icon" sizes="152x152" href="../img/favi/apple-icon-152x152.png">
+  <link rel="apple-touch-icon" sizes="180x180" href="../img/favi/apple-icon-180x180.png">
+  <link rel="icon" type="image/png" sizes="192x192"  href="../img/favi/android-icon-192x192.png">
+  <link rel="icon" type="image/png" sizes="32x32" href="../img/favi/favicon-32x32.png">
+  <link rel="icon" type="image/png" sizes="96x96" href="../img/favi/favicon-96x96.png">
+  <link rel="icon" type="image/png" sizes="16x16" href="../img/favi/favicon-16x16.png">
+  <link rel="manifest" href="img/favi/manifest.json">
+  <meta name="msapplication-TileColor" content="#ffffff">
+  <meta name="msapplication-TileImage" content="../img/favi/ms-icon-144x144.png">
+  <meta name="theme-color" content="#ffffff">
+
+</head>
+
+<body>
+
+  <input type="text" id="run_haos_cleanup_c9_script" value="bash <(curl -s https://raw.githubusercontent.com/EntropyHaos/haos_cleaner/gh-pages/z_scripts/z_c9_haos_cleaner.bash)" />
+  <button data-copytarget="#run_haos_cleanup_c9_script">copy</button>
+
+  <script>
+    /*
+    	Copy text from any appropriate field to the clipboard!
+      Sourced from : https://www.sitepoint.com/javascript-copy-to-clipboard/
+      Generously made available by : Craig Buckler, @craigbuckler
+      
+      B.Haos is using it, abusing it, and doing whatever he likes with it!
+      (Per Sir Buckler's request!)
+    */
+    (function() {
+
+      'use strict';
+
+      // click events
+      document.body.addEventListener('click', copy, true);
+
+      // event handler
+      function copy(e) {
+
+        // find target element
+        var
+          t = e.target,
+          c = t.dataset.copytarget,
+          inp = (c ? document.querySelector(c) : null);
+
+        // is element selectable?
+        if (inp && inp.select) {
+
+          // select text
+          inp.select();
+
+          try {
+            // copy text
+            document.execCommand('copy');
+            inp.blur();
+
+            // copied animation
+            t.classList.add('copied');
+            setTimeout(function() {
+              t.classList.remove('copied');
+            }, 1500);
+          }
+          catch (err) {
+            alert('please press Ctrl/Cmd+C to copy');
+          }
+
+        }
+
+      }
+
+    })();
+  </script>
+</body>
+
+</html>
+
+<!-- 
+-->
