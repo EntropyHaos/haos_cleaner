@@ -1,9 +1,100 @@
-<!DOCTYPE html>
 <html>
-    <head>
-        <title>C9 Haos Cleaner!</title>
-    </head>
-    <body>
-        <h1>Hello World!</h1>
-    </body>
+
+<head>
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <title>C9 Haos Cleanup</title>
+
+    <!-- Library scripts and markup -->
+    <script type='text/javascript' src='lib/js/x3dom.js'></script>
+    <link rel='stylesheet' type='text/css' href='lib/css/x3dom.css' />
+
+    <!-- favicon links-->
+
+    <link rel="apple-touch-icon" sizes="57x57" href="img/favi/apple-icon-57x57.png">
+    <link rel="apple-touch-icon" sizes="60x60" href="img/favi/apple-icon-60x60.png">
+    <link rel="apple-touch-icon" sizes="72x72" href="img/favi/apple-icon-72x72.png">
+    <link rel="apple-touch-icon" sizes="76x76" href="img/favi/apple-icon-76x76.png">
+    <link rel="apple-touch-icon" sizes="114x114" href="img/favi/apple-icon-114x114.png">
+    <link rel="apple-touch-icon" sizes="120x120" href="img/favi/apple-icon-120x120.png">
+    <link rel="apple-touch-icon" sizes="144x144" href="img/favi/apple-icon-144x144.png">
+    <link rel="apple-touch-icon" sizes="152x152" href="img/favi/apple-icon-152x152.png">
+    <link rel="apple-touch-icon" sizes="180x180" href="img/favi/apple-icon-180x180.png">
+    <link rel="icon" type="image/png" sizes="192x192"  href="img/favi/android-icon-192x192.png">
+    <link rel="icon" type="image/png" sizes="32x32" href="img/favi/favicon-32x32.png">
+    <link rel="icon" type="image/png" sizes="96x96" href="img/favi/favicon-96x96.png">
+    <link rel="icon" type="image/png" sizes="16x16" href="img/favi/favicon-16x16.png">
+    <link rel="manifest" href="img/favi/manifest.json">
+
+
+    <meta name="msapplication-TileColor" content="#ffffff">
+    <meta name="theme-color" content="#ffffff">
+<!-- 
+-->
+    <meta name="msapplication-TileImage" content="img/favi/ms-icon-144x144.png">
+
+    <style>
+        #logo_full_screen {
+            width: 100%;
+            height: 100%;
+            border-style: none;
+            background: #D3D3D3 url(img/logo_background.png);
+            /*
+            */
+        }
+    </style>
+
+</head>
+
+<body>
+    <x3d id="logo_full_screen">
+        <scene onclick="handleClick()">
+            <Viewpoint position="-0.25009 0.15809 0.06259" orientation="-0.03261 -0.99934 -0.01610 1.32768"  description="defaultX3DViewpointNode"></Viewpoint>
+            <Transform DEF="logos">
+                <Inline url="obj/logo.x3d"></Inline>
+            </Transform>
+            <timeSensor DEF='clock' cycleInterval='8' loop='true'></timeSensor>
+            <!--
+            NOTE:     Switch value of loop variable above to stop the spinning.
+                      Adjust cycleInterval for rotation rate (lower = higher rate). 
+            info:     http://kawahara.ca/x3d-how-to-rotate-an-object/
+            -->
+            <orientationInterpolator DEF='spinThings' key='0 0.25 0.5 0.75 1' keyValue='0 1 0 0  0 1 0 1.57079  0 1 0 3.14159  0 1 0 4.71239  0 1 0 6.28317'></orientationInterpolator>
+
+            <ROUTE fromNode='clock' fromField='fraction_changed' toNode='spinThings' toField='set_fraction'></ROUTE>
+            <ROUTE fromNode='spinThings' fromField='value_changed' toNode='logos' toField='set_rotation'></ROUTE>
+                <!--
+            <NavigationInfo type='none'>
+                NOTE:   If you comment-out the NavigationInfo element above,
+                        you can adjust the position of the object.
+                
+                        Object Movement:
+                        
+                        cntr + lft-mouse + move mouse   : Moves object up/down and left/right.
+                        lft-mouse + move mouse          : Moves object ...
+                        rit-mouse + mouse               : Moves object ...
+                        
+                        Keyboard Shortcuts!
+                        (useful when the Navigation is enabled)
+                
+                        'd' : Opens the "nav" browser console.
+                        'v' : Outputs the viewpoint to the browser console.
+                        'r' : Returns the object to it's original placement.
+                -->
+        </scene>
+    </x3d>
+
+<script>
+    
+    // Handle click.
+    // Sauce : http://doc.x3dom.org/tutorials/animationInteraction/picking/index.html
+   	function handleClick()
+   	{
+   		//console.log("The click for url redirect is disabled.");
+   		var url_for_page_redirect = "pgs/index.html";
+   		location.href = url_for_page_redirect;
+   	}
+</script>
+
+</body>
+
 </html>
